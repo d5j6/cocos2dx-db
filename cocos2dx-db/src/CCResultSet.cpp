@@ -79,7 +79,7 @@ bool CCResultSet::next() {
 				usleep(20);
 
 				if(m_db->getBusyRetryTimeout() && (numberOfRetries++ > m_db->getBusyRetryTimeout())) {
-					CCLOGWARN("CCResultSet::next: Database busy (%@)");
+					CCLOGWARN("CCResultSet::next: Database busy");
 					break;
 				}
 			} else if(SQLITE_DONE == rc || SQLITE_ROW == rc) {
