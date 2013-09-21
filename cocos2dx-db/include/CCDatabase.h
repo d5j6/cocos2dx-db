@@ -25,6 +25,7 @@
 #define __CCDatabase_h__
 
 #include "cocos2d.h"
+#include "cocos2d-common.h"
 #include <stdbool.h>
 #include "CCStatement.h"
 #include "CCResultSet.h"
@@ -242,12 +243,8 @@ public:
 	CC_SYNTHESIZE_READONLY_PASS_BY_REF(string, m_databasePath, DatabasePath);
 	CC_SYNTHESIZE_READONLY(sqlite3*, m_db, Sqlite3Handle);
 	CC_SYNTHESIZE(int, m_busyRetryTimeout, BusyRetryTimeout);
-	CC_SYNTHESIZE_READONLY(bool, m_inTransaction, InTransaction);
-	CC_SYNTHESIZE(bool, m_inUse, InUse);
-	
-	// is prefix method because CC_SYNTHESIZE macro always use get
-	bool isInTransaction() { return m_inTransaction; }
-	bool isInUse() { return m_inUse || m_inTransaction; }
+	CC_SYNTHESIZE_READONLY_BOOL(m_inTransaction, InTransaction);
+	CC_SYNTHESIZE_BOOL(m_inUse, InUse);
 };
 
 NS_CC_END
