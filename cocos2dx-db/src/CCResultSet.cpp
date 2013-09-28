@@ -97,10 +97,6 @@ bool CCResultSet::next() {
 		} while(retry);
 	}
 
-	if(rc != SQLITE_ROW) {
-		close();
-	}
-
 	return rc == SQLITE_ROW;
 }
 

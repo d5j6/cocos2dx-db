@@ -209,6 +209,10 @@ bool CCDatabase::_executeUpdate(const char* sql) {
 	cachedStmt = getCachedStatement(sql);
 	pStmt = cachedStmt ? cachedStmt->getStatement() : NULL;
 
+	// reset if statement is cached
+	if(cachedStmt)
+		cachedStmt->reset();
+	
     // retry flags
     int numberOfRetries = 0;
 	bool retry = false;
@@ -344,6 +348,10 @@ CCResultSet* CCDatabase::_executeQuery(const char* sql) {
 	// get cached statement
 	statement = getCachedStatement(sql);
 	pStmt = statement ? statement->getStatement() : NULL;
+	
+	// reset if statement is cached
+	if(statement)
+		statement->reset();
 
     // retry flags
     int numberOfRetries = 0;
@@ -558,8 +566,10 @@ int CCDatabase::intForQuery(string sql, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->intForColumnIndex(0);
+    if(rs->next())
+		return rs->intForColumnIndex(0);
+	else
+		return 0;
 }
 
 long CCDatabase::longForQuery(string sql, ...) {
@@ -571,8 +581,10 @@ long CCDatabase::longForQuery(string sql, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->longForColumnIndex(0);
+    if(rs->next())
+		return rs->longForColumnIndex(0);
+	else
+		return 0;
 }
 
 int64_t CCDatabase::int64ForQuery(string sql, ...) {
@@ -584,8 +596,10 @@ int64_t CCDatabase::int64ForQuery(string sql, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->int64ForColumnIndex(0);
+    if(rs->next())
+		return rs->int64ForColumnIndex(0);
+	else
+		return 0;
 }
 
 bool CCDatabase::boolForQuery(string sql, ...) {
@@ -597,8 +611,10 @@ bool CCDatabase::boolForQuery(string sql, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->boolForColumnIndex(0);
+    if(rs->next())
+		return rs->boolForColumnIndex(0);
+	else
+		return false;
 }
 
 double CCDatabase::doubleForQuery(string sql, ...) {
@@ -610,8 +626,10 @@ double CCDatabase::doubleForQuery(string sql, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->doubleForColumnIndex(0);
+    if(rs->next())
+		return rs->doubleForColumnIndex(0);
+	else
+		return 0;
 }
 
 string CCDatabase::stringForQuery(string sql, ...) {
@@ -623,8 +641,10 @@ string CCDatabase::stringForQuery(string sql, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->stringForColumnIndex(0);
+    if(rs->next())
+		return rs->stringForColumnIndex(0);
+	else
+		return "";
 }
 
 const void* CCDatabase::dataForQuery(string sql, size_t* outLen, ...) {
@@ -636,8 +656,10 @@ const void* CCDatabase::dataForQuery(string sql, size_t* outLen, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->dataForColumnIndex(0, outLen);
+    if(rs->next())
+		return rs->dataForColumnIndex(0, outLen);
+	else
+		return NULL;
 }
 
 const void* CCDatabase::dataNoCopyForQuery(string sql, size_t* outLen, ...) {
@@ -649,8 +671,10 @@ const void* CCDatabase::dataNoCopyForQuery(string sql, size_t* outLen, ...) {
     va_end(args);
 
     CCResultSet* rs = _executeQuery(buf);
-    rs->next();
-    return rs->dataNoCopyForColumnIndex(0, outLen);
+    if(rs->next())
+		return rs->dataNoCopyForColumnIndex(0, outLen);
+	else
+		return NULL;
 }
 
 string CCDatabase::validateSQL(string sql, ...) {
