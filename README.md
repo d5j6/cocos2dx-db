@@ -13,7 +13,12 @@ The cocos2dx-common is referred by all my cocos2d-x extensions.
 
 Demo
 ===========
-There is a test project in test folder, it supports iOS and android. If you want other platform, do it yourself.
+There is a test project in test folder, it supports iOS and android.
+
+NOTE
+===========
+In cocos2dx-common, some basic features are not implemented for Windows. If you are a Windows guy, do it yourself 
+and good luck.
 
 How to use
 ===========
